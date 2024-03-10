@@ -16,9 +16,8 @@ on:
           - patch
 
 env:
-  REGISTRY_IMAGE: ghcr.io/calaos/calaos_base
+  REGISTRY_IMAGE: ghcr.io/calaos/hue2mqtt
   NAME: calaos_base
-  IMG_TAG: dev
 
 jobs:
   publish-docker-image:
@@ -31,7 +30,7 @@ jobs:
       id: calaos_version
       uses: calaos/action-bump-version@2
       with:
-        version_fragment: 'prerelease'
+        version_fragment: ${{ github.event.inputs.vincrement || 'prerelease' }}
   
     - name: Docker meta
       id: meta
@@ -60,7 +59,7 @@ jobs:
         push: true
         build-args: APP_VERSION=${{ steps.calaos_version.outputs.version_bumped }}
         tags: |
-          ${{ env.REGISTRY_IMAGE }}:${{ env.IMG_TAG }}
+          ${{ env.REGISTRY_IMAGE }}:latest
           ${{ env.REGISTRY_IMAGE }}:${{ steps.calaos_version.outputs.version_bumped }}
 
     - name: Create Tag
@@ -75,4 +74,4 @@ jobs:
         token: ${{ secrets.ACTION_DISPATCH }}
         repository: calaos/pkgdebs
         event-type: build_deb
-        client-payload: '{ "pkgname": "calaos-hue2mqtt", "version": "${{ steps.calaos_version.outputs.version_bumped }}", "image_src": "${{ env.REGISTRY_IMAGE }}:${{ steps.calaos_version.outputs.version_bumped }}", "prerelease": true }'
+        client-payload: '{ "pkgname": "calaos-hue2mqtt", "version": "${{ steps.calaos_version.outputs.version_bumped }}", "image_src": "${{ env.REGISTRY_IMAGE }}:${{ steps.calaos_version.outputs.version_bumped }}", "prerelease": ${{ github.event.inputs.vincrement != "" }} }'
