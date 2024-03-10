@@ -1,6 +1,8 @@
 # Hue2MQTT
 
-Python Hue to MQTT Bridge
+Python Hue to MQTT Bridge.
+
+> This is a forked version to include build and packaging for Calaos-OS
 
 ## What and Why?
 
