@@ -74,4 +74,4 @@ jobs:
         token: ${{ secrets.ACTION_DISPATCH }}
         repository: calaos/pkgdebs
         event-type: build_deb
-        client-payload: '{ "pkgname": "hue2mqtt", "version": "${{ steps.calaos_version.outputs.version_bumped }}", "image_src": "${{ env.REGISTRY_IMAGE }}:${{ steps.calaos_version.outputs.version_bumped }}", "prerelease": ${{ github.event.inputs.vincrement && true || false }} }'
+        client-payload: '{ "pkgname": "hue2mqtt", "version": "${{ steps.calaos_version.outputs.version_bumped }}", "image_src": "${{ env.REGISTRY_IMAGE }}:${{ steps.calaos_version.outputs.version_bumped }}", "prerelease": ${{ github.event.inputs.vincrement && false || true }} }'
