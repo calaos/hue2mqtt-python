@@ -10,6 +10,4 @@ WORKDIR /hue2mqtt-python
 
 RUN pip install .
 
-VOLUME [ "./hue2mqtt.toml" ]
-
-CMD ["hue2mqtt"]
+CMD ["hue2mqtt", "-c", "/config/hue2mqtt.toml"]
